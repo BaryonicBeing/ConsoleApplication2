@@ -32,6 +32,7 @@ public:
 	}
 	List() : head(nullptr){}
 	~List() {
+		std::cout << "CALLED dtor!" << std::endl;
 		Node* current = head;
 
 		while (nullptr != current) {
@@ -42,9 +43,11 @@ public:
 	}
 
 	List(const List &src) {
+		std::cout << "CALLED cpyctor!" << std::endl;
 		List dest;
 		Node* temp = (&src)->head;
 		while (nullptr != temp) {
+			std::cout << "CALLED while in cpyctor!" << std::endl;
 			dest.pushback(temp->value);
 			temp = temp->next;
 		}
@@ -96,6 +99,12 @@ public:
 	}
 };
 
+
+/*	Im folgenden Abschnitt befinden sich die Testcases,
+	als auch die main und die run Methode, die diese ausführen.*/
+
+
+
 class TestList {
 private:
 	void test_Listctor() {
@@ -114,7 +123,7 @@ private:
 		assert(2 == testItem.length());
 	}
 
-	int test_threeItemsDeleteOne() {
+	void test_threeItemsDeleteOne() {
 		List testItem;
 		int len;
 		testItem.pushback(1.0);
@@ -129,14 +138,27 @@ private:
 		//len = testItem.length();
 		//std::cout << len << std::endl;
 
-		return testItem.length();
+	}
+
+	void test_CopyConstructor() {
+		List testItem;
+		int len = 0;
+		testItem.pushback(3.1415);
+		testItem.pushback(6.2830);
+		testItem.pushback(1.2345);
+
+		List cpyItem = testItem;
+		len = cpyItem.length();
+
+		std::cout << "The length is: " << len << std::endl;
 	}
 public:
 	void Run() {
 		test_Listctor();
 		//test_pushbackOneElementIncLengthTo1();
 		//test_pushbackTwoElementIncLengthTo2();
-		test_threeItemsDeleteOne();
+		//test_threeItemsDeleteOne();
+		test_CopyConstructor();
 	}
 };
 
