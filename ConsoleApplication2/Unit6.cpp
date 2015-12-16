@@ -40,12 +40,16 @@ public:
 			delete toDelete;
 		}
 	}
-	/*
-	List(const List &liste) {
-		List copy = new List();
-		*copy = liste;
+
+	List(const List &src) {
+		List dest;
+		Node* temp = (&src)->head;
+		while (nullptr != temp) {
+			dest.pushback(temp->value);
+			temp = temp->next;
+		}
 	}
-	*/
+
 	size_t length() {
 		if (nullptr == head) {
 			return 0;
