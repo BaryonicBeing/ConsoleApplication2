@@ -44,11 +44,11 @@ public:
 
 	List(const List &src) {
 		std::cout << "CALLED cpyctor!" << std::endl;
-		List dest;
+		this->head = nullptr;
 		Node* temp = (&src)->head;
 		while (nullptr != temp) {
 			std::cout << "CALLED while in cpyctor!" << std::endl;
-			dest.pushback(temp->value);
+			(*this).pushback(temp->value);
 			temp = temp->next;
 		}
 	}
