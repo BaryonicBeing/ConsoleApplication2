@@ -67,7 +67,16 @@ public:
 		return count;
 	}
 	void pushback(double value) {
-		head = new Node(value, head);
+		if (nullptr == head) {
+			head = new Node(value, head);
+			return;
+		}
+		Node* temp = head;
+
+		while (nullptr != temp->next) {
+			temp = temp->next;
+		}
+		temp->next = new Node(value);
 	}
 
 	void removeAt(int i) {
@@ -96,6 +105,12 @@ public:
 		}
 
 		
+	}
+
+	void printList() {
+		for (int i = 0; i < this->length(); ++i) {
+			std::cout << (*this)[i]->value << std::endl;
+		}
 	}
 };
 
@@ -130,13 +145,8 @@ private:
 		testItem.pushback(2.1);
 		testItem.pushback(3.2);
 
-		//len = testItem.length();
-		//std::cout << len << std::endl;
-
-		testItem.removeAt(5);
-
-		//len = testItem.length();
-		//std::cout << len << std::endl;
+		testItem.removeAt(2);
+		assert(2 == testItem.length());
 
 	}
 
@@ -149,16 +159,41 @@ private:
 
 		List cpyItem = testItem;
 		len = cpyItem.length();
+		/*
+		std::cout << "CALLED testItem output!" << std::endl;
+		testItem.printList();
+		std::cout << "CALLED cpyItem output!" << std::endl;
+		cpyItem.printList();
+		*/
 
 		std::cout << "The length is: " << len << std::endl;
+		
+		for (int i = 0; i < testItem.length(); ++i) {
+			std::cout << i << ". assert call" << std::endl;
+			assert(&(testItem[i]->value) != &(cpyItem[i]->value));
+			assert(testItem[i]->value == cpyItem[i]->value);
+		}
+		assert(testItem.length() == cpyItem.length());
+		
+	}
+
+	void test_Output() {
+		List testItem;
+		int len = 0;
+		testItem.pushback(3.1415);
+		testItem.pushback(6.2830);
+		testItem.pushback(1.2345);
+
+		testItem.printList();
 	}
 public:
 	void Run() {
 		test_Listctor();
-		//test_pushbackOneElementIncLengthTo1();
-		//test_pushbackTwoElementIncLengthTo2();
-		//test_threeItemsDeleteOne();
+		test_pushbackOneElementIncLengthTo1();
+		test_pushbackTwoElementIncLengthTo2();
+		test_threeItemsDeleteOne();
 		test_CopyConstructor();
+		test_Output();
 	}
 };
 
